@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AddressBookDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Contacts">
+    <Key>
+      <PropertyRef Name="ContactId" />
+    </Key>
+    <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Street" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Province" Type="nvarchar" MaxLength="50" />
+    <Property Name="Postal" Type="nvarchar" MaxLength="6" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersContacts">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="ContactId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ContactId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__UsersCont__Conta__1FCDBCEB">
+    <End Role="Contacts" Type="Self.Contacts" Multiplicity="1" />
+    <End Role="UsersContacts" Type="Self.UsersContacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contacts">
+        <PropertyRef Name="ContactId" />
+      </Principal>
+      <Dependent Role="UsersContacts">
+        <PropertyRef Name="ContactId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsersCont__UserI__20C1E124">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UsersContacts" Type="Self.UsersContacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UsersContacts">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsersRole__RoleI__1BFD2C07">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="UsersRoles" Type="Self.UsersRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UsersRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsersRole__UserI__1CF15040">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UsersRoles" Type="Self.UsersRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UsersRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AddressBookDataModelStoreContainer">
+    <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersContacts" EntityType="Self.UsersContacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersRoles" EntityType="Self.UsersRoles" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__UsersCont__Conta__1FCDBCEB" Association="Self.FK__UsersCont__Conta__1FCDBCEB">
+      <End Role="Contacts" EntitySet="Contacts" />
+      <End Role="UsersContacts" EntitySet="UsersContacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsersCont__UserI__20C1E124" Association="Self.FK__UsersCont__UserI__20C1E124">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersContacts" EntitySet="UsersContacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsersRole__RoleI__1BFD2C07" Association="Self.FK__UsersRole__RoleI__1BFD2C07">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UsersRoles" EntitySet="UsersRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsersRole__UserI__1CF15040" Association="Self.FK__UsersRole__UserI__1CF15040">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersRoles" EntitySet="UsersRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

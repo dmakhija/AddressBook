@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AddressBookDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="Postal" Type="nvarchar" MaxLength="6" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersContacts">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__UsersCont__Conta__1FCDBCEB">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="1" />
+          <End Role="UsersContacts" Type="Self.UsersContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="ContactId" />
+            </Principal>
+            <Dependent Role="UsersContacts">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersCont__UserI__20C1E124">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersContacts" Type="Self.UsersContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UsersContacts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersRole__RoleI__1BFD2C07">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UsersRoles" Type="Self.UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UsersRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersRole__UserI__1CF15040">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersRoles" Type="Self.UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UsersRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AddressBookDataModelStoreContainer">
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersContacts" EntityType="Self.UsersContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersRoles" EntityType="Self.UsersRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UsersCont__Conta__1FCDBCEB" Association="Self.FK__UsersCont__Conta__1FCDBCEB">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="UsersContacts" EntitySet="UsersContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersCont__UserI__20C1E124" Association="Self.FK__UsersCont__UserI__20C1E124">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersContacts" EntitySet="UsersContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersRole__RoleI__1BFD2C07" Association="Self.FK__UsersRole__RoleI__1BFD2C07">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UsersRoles" EntitySet="UsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersRole__UserI__1CF15040" Association="Self.FK__UsersRole__UserI__1CF15040">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersRoles" EntitySet="UsersRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AddressBookDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Postal" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.UsersContacts" FromRole="Contacts" ToRole="Users" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.UsersRoles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Contacts" Relationship="Self.UsersContacts" FromRole="Users" ToRole="Contacts" />
+          <NavigationProperty Name="Roles" Relationship="Self.UsersRoles" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <Association Name="UsersContacts">
+          <End Role="Contacts" Type="Self.Contact" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="UsersRoles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="AddressBookDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="UsersContacts" Association="Self.UsersContacts">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UsersRoles" Association="Self.UsersRoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AddressBookDataModelStoreContainer" CdmEntityContainer="AddressBookDbContext">
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="AddressBookDataModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AddressBookDataModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AddressBookDataModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersContacts" TypeName="AddressBookDataModel.UsersContacts" StoreEntitySet="UsersContacts">
+            <EndProperty Name="Contacts">
+              <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UsersRoles" TypeName="AddressBookDataModel.UsersRoles" StoreEntitySet="UsersRoles">
+            <EndProperty Name="Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

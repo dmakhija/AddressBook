@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AddressBookDataModelStoreContainer" CdmEntityContainer="AddressBookDbContext">
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="AddressBookDataModel.Contact">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="Postal" ColumnName="Postal" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="AddressBookDataModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="AddressBookDataModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UsersContacts" TypeName="AddressBookDataModel.UsersContacts" StoreEntitySet="UsersContacts">
+      <EndProperty Name="Contacts">
+        <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+      </EndProperty>
+      <EndProperty Name="Users">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsersRoles" TypeName="AddressBookDataModel.UsersRoles" StoreEntitySet="UsersRoles">
+      <EndProperty Name="Roles">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="Users">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

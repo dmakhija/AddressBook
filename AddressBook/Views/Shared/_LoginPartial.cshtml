@@ -1,0 +1,47 @@
+﻿
+@if (Session["UserName"] != null)
+{
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <div id="username">
+                    <i class="nav-icon fa fa-user"></i>
+                    <span class="sr-only">Log Off</span>
+                    Hello, <span><b>@Session["UserName"].ToString()</b></span>
+                </div>
+                
+                @*
+                    @Html.ActionLink("Hello " + Session["UserName"].ToString() + "!", "Details", "Users", new { id = Session["UserId"] }, htmlAttributes: new { title = "My Profile" })
+                *@
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">
+                    <i class="nav-icon fa fa-power-off"></i>
+                    <span class="sr-only">Log Off</span>
+                Log Off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="@Url.Action("Register", "Account", null)" id="registerLink">
+                <i class="nav-icon fa fa-user"></i>
+                <span class="sr-only">Register</span>
+                Register
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Login", "Account", null)" id="loginLink">
+                <i class="nav-icon fa fa-key"></i>
+                <span class="sr-only">Log in</span>
+                Log in
+            </a>
+        </li>
+
+    </ul>
+}
+

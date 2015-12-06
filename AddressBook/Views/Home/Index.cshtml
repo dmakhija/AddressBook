@@ -1,0 +1,74 @@
+﻿
+@model AddressBook.Models.LoginViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Home";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+
+<body class="landing">
+    <div class="container body-content landing">
+        <div class="col-lg-4 col-lg-offset-4 logindiv well well-lg">
+            <h2>Contact Book</h2>
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, htmlAttributes: new { @class = "landing-login-form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.Label(ViewBag.Error as string, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <span class=""><i class="glyphicon glyphicon-user"></i>Username/Email</span>
+                        <div class="col-md-12 input-group input-group-lg  myinput">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <span class=""><i class="glyphicon glyphicon-lock"></i>Password</span>
+                        <div class="col-md-12 input-group input-group-lg  myinput">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @type = "password" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-lg-12 myinput">
+                            <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" id="btnLoginHome" name="btnLoginHome" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            @Html.ActionLink("Join Now", "Register", "Account", null, new { @class = "col-md-6 control-label left", alt = "Join Now" })
+                            @Html.ActionLink("Forgot Password", "ForgotPassword", "Account", null, new { @class = "col-md-6 control-label left", alt = "Forgot Password" })
+                            
+                        </div>
+                    </div>
+                </fieldset>
+            }
+
+        </div>
+    </div>
+</body>
+</html>

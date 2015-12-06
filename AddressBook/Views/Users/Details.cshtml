@@ -1,0 +1,52 @@
+﻿@model AddressBook.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="form-horizontal">
+    <h2>View My Profile</h2>
+    <hr />
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="btn-group">
+                <div class="btn btn-md btn-warning btn-links">
+                    <a href="@Url.Action("Index", "Users")" title="Close">
+                        <i class="fa fa-close"></i>
+                        Close
+                    </a>
+                </div>
+                <div class="btn-success btn-links">
+                    <a href="@Url.Action("Edit", "Users", new { id = Model.UserId })" class="btn btn-md btn-success">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AddressBookDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactId" />
+    </Key>
+    <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Postal" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.UsersContacts" FromRole="Contacts" ToRole="Users" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.UsersRoles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Contacts" Relationship="Self.UsersContacts" FromRole="Users" ToRole="Contacts" />
+    <NavigationProperty Name="Roles" Relationship="Self.UsersRoles" FromRole="Users" ToRole="Roles" />
+  </EntityType>
+  <Association Name="UsersContacts">
+    <End Role="Contacts" Type="Self.Contact" Multiplicity="*" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+  </Association>
+  <Association Name="UsersRoles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="AddressBookDbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Contacts" EntityType="Self.Contact" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="UsersContacts" Association="Self.UsersContacts">
+      <End Role="Contacts" EntitySet="Contacts" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UsersRoles" Association="Self.UsersRoles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

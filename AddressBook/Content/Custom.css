@@ -1,0 +1,37 @@
+/*
+    * Custom CSS
+
+*/
+
+h2{
+    margin-top: 30px;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #bce8f1 !important;
+}
+
+.navbar-nav {
+    margin: 5px 0px 0px 0px !important;
+}
+.fa{
+    padding: 0px 5px;
+}
+
+#username {
+    color: #bce8f1 !important;
+    line-height: 20px;
+    position: relative;
+    display: block;
+    padding: 15px 10px;
+}
+.btn-links{
+    display: inline-block;
+    position: relative;
+    margin: 0px 0px 10px 10px;
+}
+
+.btn-links a{
+    color:#ffffff !important;
+    text-decoration: none;
+}
+
